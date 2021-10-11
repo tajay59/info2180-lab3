@@ -6,24 +6,30 @@
     const button    = document.querySelector(".btn");                    // Button selector for restarting the game
     boardplays      = new Array(9);                                      // Array used to store each play / history
     const board     = document.querySelectorAll('#board > div');  
-
+    status.innerHTML = `Move your mouse over a square and click to play an X or an O. <strong>  Player X is next </strong>`;
     board.forEach((item,index ) => {item.classList.add("square");});     // Add .square class to each child div of #board
 
     board.forEach((item,index ) => { 
         item.addEventListener("click",()=> {
             if((boardplays[index] === undefined) && playOn ){            // Process new play only if selected square is empty
             let play = (nextplay == false)?  "X" : "O"                   // Toggle between 'X' and 'O' for each play
+            let nextplayer = (nextplay == true)?  "X" : "O"                   // Toggle between 'X' and 'O' for each play
             item.classList.add(play);                                    // Add appropriate styling to each 'X' or 'O' play based on class in css file
             boardplays[index] = play;                                    // Update array with current play , 
             nextplay = !nextplay;                                        // Toggle next play
             item.innerHTML = play;                                       // Print cuurent play to clicked square  
+            status.innerHTML = `Move your mouse over a square and click to play an X or an O.   <strong>   Player ${nextplayer} is next </strong>`;
             const winner =  WhoWon(boardplays); 
             if(winner) {
                 status.classList.add("you-won");
                 status.innerHTML = `Congratulations! ${winner} is the Winner!`; // Print winner 
                 playOn = false;                                          // Prevent any additional plays after a game has been won
             }
-             } });
+             
+            
+        
+        
+        } });
         
         item.addEventListener("mouseover",()=> { 
             item.classList.add("hover");                                  // Add appropriate styling to each square on mouseover   
@@ -41,7 +47,7 @@
             boardplays      = new Array(9);                               // Create new array to store history
             board.forEach((item ) => {item.innerHTML = ""; item.classList.remove("X"); item.classList.remove("O");   });             // Clear board
             status.classList.remove("you-won");                           // remove you-won class from status div
-            status.innerHTML = "Move your mouse over a square and click to play an X or an O."; // Reset to default text
+            status.innerHTML = `Move your mouse over a square and click to play an X or an O.   <strong>  Player X is next </strong>`; // Reset to default text
             nextplay        = false;                                      // Set first player to X after starting a new game
             playOn          = true;                                       // Enable game after restart
         });
