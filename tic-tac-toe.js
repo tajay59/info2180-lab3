@@ -14,13 +14,13 @@
             if((boardplays[index] === undefined) && playOn ){            // Process new play only if selected square is empty
             let play = (nextplay == false)?  "X" : "O"                   // Toggle between 'X' and 'O' for each play
             item.classList.add(play);                                    // Add appropriate styling to each 'X' or 'O' play based on class in css file
-            boardplays[index] = play;                                    // Update array with current play 
+            boardplays[index] = play;                                    // Update array with current play , 
             nextplay = !nextplay;                                        // Toggle next play
             item.innerHTML = play;                                       // Print cuurent play to clicked square  
             const winner =  WhoWon(boardplays); 
             if(winner) {
                 status.classList.add("you-won");
-                status.innerHTML = `Congratulations! ${winner} is the Winner!`;
+                status.innerHTML = `Congratulations! ${winner} is the Winner!`; // Print winner 
                 playOn = false;                                          // Prevent any additional plays after a game has been won
             }
              } });
@@ -39,9 +39,11 @@
 
     button.addEventListener("click",()=>{
             boardplays      = new Array(9);                               // Create new array to store history
-            board.forEach((item ) => {item.innerHTML = "";});             // Clear board
+            board.forEach((item ) => {item.innerHTML = ""; item.classList.remove("X"); item.classList.remove("O");   });             // Clear board
             status.classList.remove("you-won");                           // remove you-won class from status div
             status.innerHTML = "Move your mouse over a square and click to play an X or an O."; // Reset to default text
+            nextplay        = false;                                      // Set first player to X after starting a new game
+            playOn          = true;                                       // Enable game after restart
         });
 };
 
